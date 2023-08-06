@@ -12,5 +12,7 @@
 - Handling non-alpha-numeric tokens
 
 # Rust translation of the Parser
-
-- To Be Completed Soon.
+- To Be Completed Soon:
+    - Algorithm
+    - Implementation
+    - Additional research
