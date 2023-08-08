@@ -198,7 +198,7 @@ pub fn analysis(buffer: Vec<char>) -> Vec<(String, Token)> {
 
                 tokens.push((token_string.clone(), Token::tok_man_number));
                 token_string.clear();
-            
+        
             
             //Handles operators/boilerplate tokens
             }
