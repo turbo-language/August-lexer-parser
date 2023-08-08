@@ -1,5 +1,7 @@
 use crate::lexer::token_lib::Token;
 
+use super::token_lib;
+
 //Helper function to validate if another iteration can be completed without going out of bounds
 fn can_iterate(size: usize, pos: usize) -> bool {
     if pos + 1 >= size {
@@ -179,6 +181,26 @@ pub fn analysis(buffer: Vec<char>) -> Vec<(String, Token)> {
                     tokens.push((token_string.clone(), Token::tok_man_identifier));
                     token_string.clear();
                 }
+            
+            //Handles numeric tokens (floats and ints)
+            } else if buff_char.is_numeric() || buff_char == '.' {
+                //Keep checking for what the number is until its no longer recognized to be a number
+                while buff_char.is_numeric() {
+                    token_string.push(buff_char);
+
+                    if can_iterate(buffer.len(), curr_pos) {
+                        curr_pos += 1;
+                    } else {
+                        break;
+                    }
+                    buff_char = buffer[curr_pos];
+                }
+
+                tokens.push((token_string.clone(), Token::tok_man_number));
+                token_string.clear();
+            
+            
+            //Handles operators/boilerplate tokens
             }
         }
     } 
