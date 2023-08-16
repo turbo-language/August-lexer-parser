@@ -4,7 +4,7 @@ use super::token_lib;
 
 //Helper function to validate if another iteration can be completed without going out of bounds
 fn can_iterate(size: usize, pos: usize) -> bool {
-    if pos + 1 >= size {
+    if pos + 1 > size {
         return false;
     }
     return true;
@@ -35,7 +35,7 @@ pub fn analysis(buffer: Vec<char>) -> Vec<(String, Token)> {
             }
 
             //Check for Comments: If the current character is '/' and the one after it is also '/', then comment till the end of the line ('\n')
-            if buff_char == '/' && buffer[curr_pos] == '/' {
+            if buff_char == '\\' && buffer[curr_pos] == '\\' {
 
                 //Different buff_char to specifically handle ignoring comments 
                 let mut comment_buff_char = buff_char;
@@ -198,10 +198,70 @@ pub fn analysis(buffer: Vec<char>) -> Vec<(String, Token)> {
 
                 tokens.push((token_string.clone(), Token::tok_man_number));
                 token_string.clear();
-        
+                curr_pos -= 1;
             
-            //Handles operators/boilerplate tokens
+            //Handles syntactic tokens/special symbols:
+
+            //Parenthesis
+            } else if buff_char == '(' || buff_char == ')' {
+                token_string.push(buff_char);
+
+                tokens.push((token_string.clone(), Token::tok_ss_parenthesis));
+                token_string.clear();
+            
+            //Braces
+            } else if buff_char == '{' || buff_char == '}' {
+                token_string.push(buff_char);
+
+                tokens.push((token_string.clone(), Token::tok_ss_braces));
+                token_string.clear();
+
+            //Comma
+            } else if buff_char == ';' {
+                token_string.push(';');
+
+                tokens.push((token_string.clone(), Token::tok_ss_semicolon));
+                token_string.clear();
+            
+            //semicolon
+            } else if buff_char == ',' {
+                token_string.push(',');
+
+                tokens.push((token_string.clone(), Token::tok_ss_comma));
+                token_string.clear();
+            
+            
+            //Handles operators:
+            
+            //assignment operator
+            } else if buff_char == '=' {
+                token_string.push('=');
+
+                tokens.push((token_string.clone(), Token::tok_op_assign));
+                token_string.clear();
+            
+            //arithmetic operator
+            } else if buff_char == '+' || buff_char == '-' || buff_char == '*' || (buff_char == '/') || buff_char == '%' {
+                token_string.push(buff_char);
+
+                tokens.push((token_string.clone(), Token::tok_op_arithmetic));
+                token_string.clear();
+            
+            //logical operator
+            } else if buff_char == '!' {
+                token_string.push('!');
+
+                tokens.push((token_string.clone(), Token::tok_op_logical));
+                token_string.clear();
+            
+            //Relational operators (only doing single character ops for rn, will add multipel character ones later)
+            } else if buff_char == '<' || buff_char == '>' {
+                token_string.push(buff_char);
+
+                tokens.push((token_string.clone(), Token::tok_op_relational));
+                token_string.clear();
             }
+
         }
     } 
 

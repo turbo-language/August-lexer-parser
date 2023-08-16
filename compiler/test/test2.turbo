@@ -1,0 +1,14 @@
+\\This is a Comment.
+\\This is a second Comment.
+
+\\let x = 0; def main()
+\\def main() {}
+
+def main() {
+    \\def main()
+    let x = 0;
+
+    \\return x;
+
+    return x;
+}

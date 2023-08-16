@@ -1,0 +1,9 @@
+def main(x, y) {
+    if (x > y or x < 5) {
+        return x;
+    }
+
+    let y = x;
+
+    return(y, x - 1);
+}
