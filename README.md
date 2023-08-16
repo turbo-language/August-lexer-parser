@@ -8,7 +8,7 @@
 - Tokens Vector is now a vector of tuples: `Vec<(token_name, token_type)>`
 
 ## To be completed:
-- Handling non-alpha-numeric tokens/Boilerplate tokens.
+- Few misc Bugs to fix 
 
 # Rust translation of the Parser
 - To Be Completed Soon:
